@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -13,10 +14,10 @@ public class VentanaLogin extends JFrame {
     JLabel txtUsuari;
     JTextField usuari;
 
-    JLabel txtContrasenya;
-    JPasswordField contrasenya;
+    JLabel txtCognom;
+    JTextField cognoms;
 
-    JComboBox<String> rolComboBox;
+
 
     JButton enviar;
 
@@ -24,7 +25,7 @@ public class VentanaLogin extends JFrame {
         setTitle("Login Biblioteca");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(4, 2));
+        setLayout(new GridLayout(3, 2));
         setLocationRelativeTo(null);
  
 
@@ -34,18 +35,14 @@ public class VentanaLogin extends JFrame {
         usuari = new JTextField();
         add(usuari);
 
-        txtContrasenya = new JLabel("Contrasenya: ");
-        add(txtContrasenya);
+        txtCognom = new JLabel("Contrasenya: ");
+        add(txtCognom);
 
-        contrasenya = new JPasswordField();
-        add(contrasenya);
+        cognoms = new JTextField();
+        add(cognoms);
 
        
-        String[] roles = { "bibliotecari", "lector" };
-        rolComboBox = new JComboBox<>(roles);
-
-        add(new JLabel("Selecciona el rol del usuari:"));
-        add(rolComboBox);
+    
 
         enviar = new JButton("Envia");
         add(enviar);
@@ -56,35 +53,22 @@ public class VentanaLogin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String rolSelecionat = (String) rolComboBox.getSelectedItem();
                 String nomUsuari = usuari.getText();
-                String passwordUsuari = "";
+                String cognomUsuari = cognoms.getText();
+
+               Usuaris usu = new Usuaris(nomUsuari, cognomUsuari);
+               String[] resultado = usu.validarCredencials(nomUsuari, cognomUsuari);
 
 
-                char[] contrasenyaUsuari = contrasenya.getPassword();
-
-                for (int i = 0; i < contrasenyaUsuari.length; i++) {
-                    passwordUsuari = passwordUsuari + contrasenyaUsuari[i];
-                }
-
-                //Crearia el objeto usuari (nomUsuari, passwordUsuari, rolSelecionat)
-
-                if (rolSelecionat.equals("lector")) {
-                    //Llamaria a metodo validarCredenciales
-
-                    //Llama a interfaz del lector si validarCredenciales me devuelve true, sino saldrá una alterta de error
-                    VentanaLectores ventanaLector = new VentanaLectores();
-                }else{
-
-                    //Llamaria a metodo validarCredenciales
-
-
-                    //Llama a interfaz del biblioteciario si validarCredenciales me devuelve true, sino saldrá una alterta de error
-                    VentanaBibliotecarios ventanaBibliotecarios = new VentanaBibliotecarios();
-                }
-                System.out.println("El rol seleccionat es: " + rolSelecionat);
-                System.out.println("Usuari: " + nomUsuari);
-                System.out.println("Password: " + passwordUsuari);
+               if (resultado[0].equals("valid") && resultado[1].equals("bibliotecari")) {
+                    VentanaBibliotecarios visor = new VentanaBibliotecarios();
+               }if (resultado[0].equals("valid") && resultado[1].equals("lector")) {
+                    VentanaLectores visor = new VentanaLectores();
+                
+               } if (!resultado[0].equals("valid")) {
+                    JOptionPane.showMessageDialog(VentanaLogin.this, "Error no s'ha trobat el usuari", "Informació", JOptionPane.INFORMATION_MESSAGE);
+               }
+               
             }
         });
     }

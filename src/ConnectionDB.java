@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class ConnectionDB {
 
-    static final String DB_URL =  "jdbc:mysql://localhost:3306/contactes";
+    static final String DB_URL =  "jdbc:mysql://localhost:3306/biblioteca";
     static final String USER = "root";
     static final String PASS = "Alex2310";
 
