@@ -29,13 +29,13 @@ public class VentanaLogin extends JFrame {
         setLocationRelativeTo(null);
  
 
-        txtUsuari = new JLabel("Usuari: ");
+        txtUsuari = new JLabel("Nom: ");
         add(txtUsuari);
 
         usuari = new JTextField();
         add(usuari);
 
-        txtCognom = new JLabel("Contrasenya: ");
+        txtCognom = new JLabel("Cognom: ");
         add(txtCognom);
 
         cognoms = new JTextField();

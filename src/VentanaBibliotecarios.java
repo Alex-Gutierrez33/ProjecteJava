@@ -1,5 +1,8 @@
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +18,7 @@ public class VentanaBibliotecarios extends JFrame {
     JLabel textUsu;
     JButton afegirUsuari;
     JButton eliminarUsuari;
+    JButton crearPrestec;
 
 
 
@@ -22,7 +26,7 @@ public class VentanaBibliotecarios extends JFrame {
         setTitle("Bibliotecaris");
         setSize(400, 600);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(9,1));
+        setLayout(new GridLayout(10,1));
 
 
         text = new JLabel("Accions a realitzar: ");
@@ -52,8 +56,42 @@ public class VentanaBibliotecarios extends JFrame {
         eliminarUsuari = new JButton("Eliminar usuari");
         add(eliminarUsuari);
 
+        crearPrestec = new JButton("Crear un prestec");
+        add(crearPrestec);
+
 
         setVisible(true);
+
+        observarLlibres.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Llibres llibre = new Llibres();
+                llibre.veureLlibres();
+            }
+        });
+
+        observarUnLlibre.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaEliminarMostrarLlibre visor = new VentanaEliminarMostrarLlibre();
+            }
+        });
+
+        eliminarLlibre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaEliminarMostrarLlibre visor = new VentanaEliminarMostrarLlibre();
+            }
+        });
+
+        crearPrestec.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaPrestecs visor = new VentanaPrestecs();
+                
+            }
+        });
 
 
     }
