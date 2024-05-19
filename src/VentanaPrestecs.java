@@ -50,6 +50,11 @@ public class VentanaPrestecs extends JFrame{
         crearPresetec = new JButton("Crear prestec");
         add(crearPresetec);
 
+      
+
+    
+
+
         setVisible(true);
 
         veureLlibres.addActionListener(new ActionListener() {
@@ -76,11 +81,13 @@ public class VentanaPrestecs extends JFrame{
                 String cognomsPrestec = cognomUsuari.getText();
                 String llibreDemanat = titolLibre.getText();
 
-                Usuaris usu = new Usuaris();
-                usu.crearPresetec(nomPrestec, cognomsPrestec, llibreDemanat);
+                Prestecs prestec = new Prestecs();
+                prestec.crearPresetec(nomPrestec, cognomsPrestec, llibreDemanat);
                 
             }
         });
+
+       
 
     }
     

@@ -1,10 +1,8 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,8 +39,6 @@ public class VentanaLogin extends JFrame {
         cognoms = new JTextField();
         add(cognoms);
 
-       
-    
 
         enviar = new JButton("Envia");
         add(enviar);
@@ -56,8 +52,8 @@ public class VentanaLogin extends JFrame {
                 String nomUsuari = usuari.getText();
                 String cognomUsuari = cognoms.getText();
 
-               Usuaris usu = new Usuaris(nomUsuari, cognomUsuari);
-               String[] resultado = usu.validarCredencials(nomUsuari, cognomUsuari);
+                Usuaris usu = new Usuaris(nomUsuari, cognomUsuari);
+                String[] resultado = usu.validarCredencials(nomUsuari, cognomUsuari);
 
 
                if (resultado[0].equals("valid") && resultado[1].equals("bibliotecari")) {
@@ -71,5 +67,18 @@ public class VentanaLogin extends JFrame {
                
             }
         });
+
     }
+
+    public String getNomUsuari(){
+        return usuari.getText();
+    }
+
+    public String getCognomsUsuari(){
+        return cognoms.getText();
+    }
+
+    
+
+ 
 }

@@ -2,7 +2,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 
-
 public class ConnectionDB {
 
     static final String DB_URL =  "jdbc:mysql://localhost:3306/biblioteca";

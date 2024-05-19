@@ -11,7 +11,7 @@ public class VentanaBibliotecarios extends JFrame {
 
     JLabel text;
     JButton observarLlibres;
-    JButton observarUnLlibre;
+    JButton administrarLlibres;
     JButton afegirLlibre;
     JButton editarLlibre;
     JButton eliminarLlibre;
@@ -19,6 +19,7 @@ public class VentanaBibliotecarios extends JFrame {
     JButton afegirUsuari;
     JButton eliminarUsuari;
     JButton crearPrestec;
+    JButton veurePrestecs;
 
 
 
@@ -35,8 +36,8 @@ public class VentanaBibliotecarios extends JFrame {
         observarLlibres = new JButton("Veure llibres");
         add(observarLlibres);
 
-        observarUnLlibre = new JButton("Veure un llibre");
-        add(observarUnLlibre);
+        administrarLlibres = new JButton("Administrar Llibres");
+        add(administrarLlibres);
 
         afegirLlibre = new JButton("Afegix llibre");
         add(afegirLlibre);
@@ -44,9 +45,7 @@ public class VentanaBibliotecarios extends JFrame {
         editarLlibre = new JButton("Editar llibre");
         add(editarLlibre);
 
-        eliminarLlibre = new JButton("Eliminar llibre");
-        add(eliminarLlibre);
-
+       
         textUsu = new JLabel("Accions dels usuaris: ");
         add(textUsu);
 
@@ -59,6 +58,9 @@ public class VentanaBibliotecarios extends JFrame {
         crearPrestec = new JButton("Crear un prestec");
         add(crearPrestec);
 
+        veurePrestecs = new JButton("Listar Prestecs");
+        add(veurePrestecs);
+
 
         setVisible(true);
 
@@ -70,7 +72,7 @@ public class VentanaBibliotecarios extends JFrame {
             }
         });
 
-        observarUnLlibre.addActionListener(new ActionListener() {
+        administrarLlibres.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,18 +80,21 @@ public class VentanaBibliotecarios extends JFrame {
             }
         });
 
-        eliminarLlibre.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                VentanaEliminarMostrarLlibre visor = new VentanaEliminarMostrarLlibre();
-            }
-        });
+
 
         crearPrestec.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 VentanaPrestecs visor = new VentanaPrestecs();
                 
+            }
+        });
+
+        veurePrestecs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Prestecs prestec = new Prestecs();
+                prestec.veurePrestecs();
             }
         });
 
