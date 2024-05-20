@@ -117,6 +117,66 @@ public class Llibres extends JFrame {
         }
     }
 
+
+
+    public void afegirLlibre(String titol,String autor, String isbn, String editorial, int any, String categoria, String estat){
+        ConnectionDB conn = new ConnectionDB();
+        
+        try {
+            Connection result = conn.getConection();
+            String query = "INSERT INTO llibres (titol, autor, isbn, editorial, any_publicacio, categoria, estat) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = result.prepareStatement(query);
+            pstmt.setString(1, titol);
+            pstmt.setString(2, autor);
+            pstmt.setString(3, isbn);
+            pstmt.setString(4, editorial);
+            pstmt.setInt(5, any);
+            pstmt.setString(6, categoria);
+            pstmt.setString(7, estat);
+            int canvis = pstmt.executeUpdate();
+    
+            if (canvis > 0) {
+                JOptionPane.showMessageDialog(Llibres.this, "Llibre afegit correctament!");
+            }
+    
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Llibres.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+    
+
+    }
+
+    public void editarLlibre(String titol, String camp, String nouValor){
+        ConnectionDB conn = new ConnectionDB();
+        
+        try {
+            Connection result = conn.getConection();
+            Statement stmt = result.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM llibres");
+
+            while (rs.next()) {
+                String titolDatabse = rs.getString("titol");
+                
+                if ( titolDatabse.equals((titol))) {
+                    String query = "UPDATE llibres SET " + camp + " = ? WHERE titol = ?";
+                    PreparedStatement pstmt = result.prepareStatement(query);
+                    pstmt.setString(1, nouValor);
+                    pstmt.setString(2, titol);
+
+                    int canvis = pstmt.executeUpdate();
+
+                    if (canvis > 0) {
+                        JOptionPane.showMessageDialog(Llibres.this, "Llibre editat correctament!");
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Llibres.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+
     public void mostrarLlibresDisponibles(){
         int contador = 0; 
         ConnectionDB conn = new ConnectionDB();

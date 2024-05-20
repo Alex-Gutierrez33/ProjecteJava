@@ -106,15 +106,15 @@ public class Usuaris extends JFrame{
             pstmt.setString(4, telefon);
             pstmt.setString(5, rol);
             pstmt.setString(6, data);
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
+            int canvis = pstmt.executeUpdate();
+            if (canvis > 0) {
                 JOptionPane.showMessageDialog(Usuaris.this, "Usuari afegit correctament!");
             }
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(Usuaris.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
         
     }
 

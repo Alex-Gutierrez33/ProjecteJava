@@ -80,6 +80,23 @@ public class VentanaBibliotecarios extends JFrame {
             }
         });
 
+        afegirLlibre.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaAfegirLlibre visor = new VentanaAfegirLlibre();
+            }
+        });
+
+        editarLlibre.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaEditarLlibre visor = new VentanaEditarLlibre();
+            }
+        });
+
+
 
 
         crearPrestec.addActionListener(new ActionListener() {
