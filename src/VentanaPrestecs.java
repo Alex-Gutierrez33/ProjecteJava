@@ -83,7 +83,7 @@ public class VentanaPrestecs extends JFrame{
 
                 Prestecs prestec = new Prestecs();
                 prestec.crearPresetec(nomPrestec, cognomsPrestec, llibreDemanat);
-                
+                dispose();
             }
         });
 

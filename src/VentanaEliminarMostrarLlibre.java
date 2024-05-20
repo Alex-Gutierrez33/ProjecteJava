@@ -51,7 +51,7 @@ public class VentanaEliminarMostrarLlibre extends JFrame {
 
                 Llibres llibre = new Llibres();
                 llibre.eliminarLlibre(llibreDemanat);
-                
+                dispose();
             }
         });
     }

@@ -1,10 +1,10 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 
@@ -93,5 +93,77 @@ public class Usuaris extends JFrame{
         }
     }
 
-    
+    public void afegirUsuaris(String nom, String cognoms, String email, String telefon, String rol, String data){
+        ConnectionDB conn = new ConnectionDB();
+
+        try {
+            Connection result = conn.getConection();  
+            String query = "INSERT INTO usuaris (nom, cognoms, email, telefon, rol, data_registre) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = result.prepareStatement(query);
+            pstmt.setString(1, nom);
+            pstmt.setString(2, cognoms);
+            pstmt.setString(3, email);
+            pstmt.setString(4, telefon);
+            pstmt.setString(5, rol);
+            pstmt.setString(6, data);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(Usuaris.this, "Usuari afegit correctament!");
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Usuaris.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        
+    }
+
+
+
+
+
+    public void eliminarUsuari(String nomUsuari, String cognomUsuari){
+        ConnectionDB conn = new ConnectionDB();
+        int contador = 0;
+
+        try {
+            Connection result = conn.getConection();
+
+            Statement stmt = result.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM usuaris");
+
+            while (rs.next()) {
+                String nom = rs.getString("nom");
+                String cognom = rs.getString("cognoms");
+                if (nom.equals(nomUsuari) && cognom.equals(cognomUsuari)) {
+                    contador++;
+                }
+
+            }
+
+            if (contador == 0) {
+                JOptionPane.showMessageDialog(Usuaris.this, "No hem trobat l'usuari", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                String query = "DELETE FROM usuaris WHERE nom = ? AND cognoms = ?";
+
+                PreparedStatement pstmt = result.prepareStatement(query);
+                pstmt.setString(1, nomUsuari);
+                pstmt.setString(2, cognomUsuari);
+
+                int rows  = pstmt.executeUpdate();
+
+                if (rows > 0) {
+                    JOptionPane.showMessageDialog(Usuaris.this, "Usuari esobrrat de la base de dades", "Informatiu", JOptionPane.INFORMATION_MESSAGE);                    
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Usuaris.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+    }
+
 }
+
+    

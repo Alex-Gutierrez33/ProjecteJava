@@ -99,6 +99,23 @@ public class VentanaBibliotecarios extends JFrame {
         });
 
 
+         afegirUsuari.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaAfegirUsuaris visor = new VentanaAfegirUsuaris();
+               
+            }
+        });
+
+        eliminarUsuari.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaEliminarUsuari visor = new VentanaEliminarUsuari(); 
+               
+            }
+        });
+
+
     }
     
 }
