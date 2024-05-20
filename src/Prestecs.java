@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -125,71 +126,165 @@ public class Prestecs extends JFrame {
         }
     }
 
-    public void veurePrestecsIndividual(String usuari, String cognoms){
-        int contador = 0;
+    public void veurePrestecsIndividual(){
+       
+
+        String usauriLogin = VentanaLogin.nomUsuari;
+        String cognomLogin = VentanaLogin.cognomUsuari;
         int idUsuariTrobat = 0;
-        int trobat = 0;
 
-        if (usuari.equals("") || cognoms.equals("")) {
-            JOptionPane.showMessageDialog(Prestecs.this, "Camps buits, inserta el nom i cognoms", "Error", JOptionPane.INFORMATION_MESSAGE);
+    
 
-        }else{
-            ConnectionDB conn = new ConnectionDB();
+        ConnectionDB conn = new ConnectionDB();
 
-            try {
-                Connection result = conn.getConection();
-                Statement stmt = result.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM usuaris");
+        try {
+            Connection result = conn.getConection();
+            Statement stmt = result.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM usuaris");
 
-                while (rs.next()) {
-                    String nomDatabase = rs.getString("nom");
-                    String cognomDatabase = rs.getString("cognoms");
-
-                    if (nomDatabase.equals(usuari) && cognomDatabase.equals(cognoms)) {
-                        contador++;
-                        idUsuariTrobat = rs.getInt("id_usuari");
-                    }
+            while (rs.next()) {
+                String nomUsuari = rs.getString("nom");
+                String cognomUsuari = rs.getString("cognoms");
+                
+                if (nomUsuari.equals(usauriLogin) && cognomUsuari.equals(cognomLogin)) {
+                    idUsuariTrobat = rs.getInt("id_usuari");  
                 }
-
-                if (contador == 1) {
-                    
-                    Statement stmt2 = result.createStatement();
-                    ResultSet rs2 = stmt2.executeQuery("SELECT * FROM prestecs");
-                    TablaMostrarPrestecs taula = new TablaMostrarPrestecs();
-
-
-                    while (rs2.next()) {
-                        if (rs2.getInt("id_usuari") == idUsuariTrobat) {
-
-                            int id_prestec = rs2.getInt("id_prestec");
-                            int id_llibre = rs2.getInt("id_llibre");
-                            int id_usuari = rs2.getInt("id_usuari");
-                            Date data_prestec = rs2.getDate("data_prestec");
-                            Date data_retorn_prevista = rs2.getDate("data_retorn_prevista");
-                            Date data_retorn_real = rs2.getDate("data_retorn_real");
-                            String estat = rs2.getString("estat");
-            
-                            taula.model.addRow(new Object[]{id_prestec,id_llibre,id_usuari,data_prestec,data_retorn_prevista,data_retorn_real,estat});
-                            trobat++;
-                        }
-                    }
-
-
-                    if (trobat == 0) {
-                        JOptionPane.showMessageDialog(Prestecs.this, "Aquest usuari no ha realitzat cap prestec", "Informatiu", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(Prestecs.this, "Usuari inexistent en la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
-
-                }
-
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(Prestecs.this, "Error al contectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
-
             }
+
+            Statement stmt2 = result.createStatement();
+            ResultSet rs2 = stmt2.executeQuery("SELECT * FROM prestecs");
+            TablaMostrarPrestecs taula = new TablaMostrarPrestecs();
+
+
+            while (rs2.next()) {
+                if (rs2.getInt("id_usuari") == idUsuariTrobat) {
+
+                    int id_prestec = rs2.getInt("id_prestec");
+                    int id_llibre = rs2.getInt("id_llibre");
+                    int id_usuari = rs2.getInt("id_usuari");
+                    Date data_prestec = rs2.getDate("data_prestec");
+                    Date data_retorn_prevista = rs2.getDate("data_retorn_prevista");
+                    Date data_retorn_real = rs2.getDate("data_retorn_real");
+                    String estat = rs2.getString("estat");
+    
+                    taula.model.addRow(new Object[]{id_prestec,id_llibre,id_usuari,data_prestec,data_retorn_prevista,data_retorn_real,estat});
+
+                }
+            }
+
+
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Prestecs.this, "Error al conectar-se en la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+
         }
 
 
+    
+
+    }
+
+    public void tornarPrestec(int idPrestecTornar){
+
+        int id_llibreEntregar = 0;
+        int entregat = 0;
+        int contador = 0;
+        int id_prestec = 0;
+        int id_prestecModificar = 0;
+        Date dataPrestec = null;
+        LocalDate dataEntregaPrestec = null;
+
+        ConnectionDB conn = new ConnectionDB();
+
+        try {
+            Connection result = conn.getConection();
+            Statement stmt = result.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM prestecs");
+
+            while (rs.next()) {
+                id_prestec = rs.getInt("id_prestec");
+                dataPrestec = rs.getDate("data_prestec");
+               
+
+                if (id_prestec == idPrestecTornar) {
+                    String estat = rs.getString("estat");
+
+                    if (estat.equals("completat") || estat.equals("retardat")) {
+                        JOptionPane.showMessageDialog(Prestecs.this, "Aquest prestec ja ha estat entregat", "Informatiu", JOptionPane.INFORMATION_MESSAGE);
+                        contador++;
+
+                    }else{
+                        id_prestecModificar = id_prestec;
+                        id_llibreEntregar = rs.getInt("id_llibre");
+                        contador++;
+
+                    }
+                }
+
+            }
+
+            if (contador == 1) {
+                LocalDate dataActual = LocalDate.now();
+                dataEntregaPrestec = dataPrestec.toLocalDate();
+
+                Long diferneciaDies = ChronoUnit.DAYS.between(dataEntregaPrestec, dataActual);
+
+                if (diferneciaDies >= 15) {
+
+                    String query = "UPDATE prestecs set data_retorn_real = ?, estat = ? WHERE id_prestec = ?";
+                    PreparedStatement pstmt = result.prepareStatement(query);
+                    pstmt.setDate(1, Date.valueOf(dataActual));
+                    pstmt.setString(2, "retardat");
+                    pstmt.setInt(3, id_prestecModificar);
+
+                    
+                    int rows = pstmt.executeUpdate();
+
+                    if (rows > 0) {
+                        JOptionPane.showMessageDialog(Prestecs.this, "Prestec retornat de forma exitosa, amb retard", "Informatiu", JOptionPane.INFORMATION_MESSAGE);
+                        entregat++;
+                    }
+
+
+                }else {
+
+                    String query = "UPDATE prestecs set data_retorn_real = ?, estat = ? WHERE id_prestec = ?";
+                    PreparedStatement pstmt = result.prepareStatement(query);
+                    pstmt.setDate(1, Date.valueOf(dataActual));
+                    pstmt.setString(2, "completat");
+                    pstmt.setInt(3, id_prestecModificar);
+
+
+                    int rows = pstmt.executeUpdate();
+
+                    if (rows > 0) {
+                        JOptionPane.showMessageDialog(Prestecs.this, "Prestec retornat de forma exitosa", "Informatiu", JOptionPane.INFORMATION_MESSAGE);
+                        entregat++;
+
+                    }
+                }
+
+                if (entregat == 1) {
+
+                    String query2 = "UPDATE llibres set estat = ? WHERE id_llibre = ?";
+                    PreparedStatement pstmt2 = result.prepareStatement(query2);
+                    pstmt2.setString(1, "disponible");
+                    pstmt2.setInt(2, id_llibreEntregar);
+
+                    pstmt2.executeUpdate();
+                }
+
+               
+
+                                
+            }else{
+                JOptionPane.showMessageDialog(Prestecs.this, "No existeix aquest prestec", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Prestecs.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+        }
 
     }
 

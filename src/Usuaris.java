@@ -1,14 +1,11 @@
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
-import java.sql.Date;
 
 
 
@@ -50,8 +47,8 @@ public class Usuaris extends JFrame{
               
             }
 
-        } catch (Exception e) {
-            System.out.println("Error");
+        } catch (SQLException e) {
+            System.out.println("Error al conectarse en la base de dades");
         }
 
         if (contador >= 1) {

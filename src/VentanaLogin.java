@@ -9,6 +9,10 @@ import java.awt.event.ActionListener;
 
 public class VentanaLogin extends JFrame {
 
+    public static String nomUsuari;
+    public static String cognomUsuari;
+
+
     JLabel txtUsuari;
     JTextField usuari;
 
@@ -49,8 +53,8 @@ public class VentanaLogin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String nomUsuari = usuari.getText();
-                String cognomUsuari = cognoms.getText();
+                nomUsuari = usuari.getText();
+                cognomUsuari = cognoms.getText();
 
                 Usuaris usu = new Usuaris(nomUsuari, cognomUsuari);
                 String[] resultado = usu.validarCredencials(nomUsuari, cognomUsuari);
