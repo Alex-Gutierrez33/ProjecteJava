@@ -64,6 +64,7 @@ public class Llibres extends JFrame {
         }
     }
 
+    
     public void mostrarUnLlibre(String nomLlibre){
         int contador = 0;
         ConnectionDB conn = new ConnectionDB();
@@ -74,7 +75,7 @@ public class Llibres extends JFrame {
             Connection result = conn.getConection();
 
             Statement stmt = result.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM llibres");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM llibres ");
 
             while (rs.next()) {
                 String titolDatabse = rs.getString("titol");
@@ -115,6 +116,97 @@ public class Llibres extends JFrame {
 
         }
     }
+
+    public void mostrarLlibresDisponibles(){
+        int contador = 0; 
+        ConnectionDB conn = new ConnectionDB();
+
+        try {
+            Connection result = conn.getConection();
+            Statement stmt = result.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * from llibres");
+
+            TablaMostrarLibros taula = new TablaMostrarLibros();
+
+            
+            while (rs.next()) {
+                String estat = rs.getString("estat");
+                if (estat.equals("disponible")) {
+                    contador++;
+                    String idDatabase = rs.getString("id_llibre");
+                    String titolDatabase = rs.getString("titol");
+                    String autorDatabase = rs.getString("autor");
+                    String isbnDatabase = rs.getString("isbn");
+                    String editorialDatabase = rs.getString("editorial");
+                    String any_publicacioDatabase = rs.getString("any_publicacio");
+                    String categoriaDatabase = rs.getString("categoria");
+                    String estatDatabase = rs.getString("estat");
+    
+                    taula.model.addRow(new Object[]{idDatabase,titolDatabase,autorDatabase,isbnDatabase,editorialDatabase,any_publicacioDatabase,categoriaDatabase,estatDatabase}); 
+                }
+            }
+            if (contador == 0) {
+                JOptionPane.showMessageDialog(Llibres.this, "No hi ha llibres disponibles, ho sentim.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error");
+        }
+    }
+
+
+    public void mostrarUnLlibreDisponible(String nomLlibre){
+        int contador = 0;
+        ConnectionDB conn = new ConnectionDB();
+        VentanaMostrarLlibre visor = new VentanaMostrarLlibre();
+        visor.setVisible(false);
+
+        try {
+            Connection result = conn.getConection();
+
+            Statement stmt = result.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM llibres ");
+
+            while (rs.next()) {
+                String titolDatabse = rs.getString("titol");
+                String estat = rs.getString("estat");
+
+                if (titolDatabse.equals(nomLlibre) && estat.equals("disponible") ) {
+                    String idDatabase = rs.getString("id_llibre");
+                    String titolDatabase = rs.getString("titol");
+                    String autorDatabase = rs.getString("autor");
+                    String isbnDatabase = rs.getString("isbn");
+                    String editorialDatabase = rs.getString("editorial");
+                    String any_publicacioDatabase = rs.getString("any_publicacio");
+                    String categoriaDatabase = rs.getString("categoria");
+                    String estatDatabase = rs.getString("estat");
+
+                    visor.id_llibre.setText(idDatabase);
+                    visor.titol.setText(titolDatabase);
+                    visor.autor.setText(autorDatabase);
+                    visor.ISBN.setText(isbnDatabase);
+                    visor.editorial.setText(editorialDatabase);
+                    visor.any.setText(any_publicacioDatabase);
+                    visor.categoria.setText(categoriaDatabase);
+                    visor.estat.setText(estatDatabase);
+
+                    contador++;
+                }
+            }
+
+            if (contador == 0) {
+                JOptionPane.showMessageDialog(Llibres.this, "El llibre no esta disponible.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                visor.setVisible(true);
+
+            }
+
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(Llibres.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+
 
 
     public void eliminarLlibre(String nomLlibre){

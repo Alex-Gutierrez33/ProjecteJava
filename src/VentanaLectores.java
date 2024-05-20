@@ -37,6 +37,25 @@ public class VentanaLectores extends JFrame {
 
         setVisible(true);
 
+        observarLlibres.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Llibres llibre = new Llibres();
+                llibre.mostrarLlibresDisponibles();
+            }
+                
+            });
+
+        observarUnLlibre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 VentanaAbansMostrarLlibre visor = new VentanaAbansMostrarLlibre();
+            }
+                    
+            });
+            
+
+
         administrarPrestecs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
