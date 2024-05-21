@@ -124,6 +124,7 @@ public class Llibres extends JFrame {
         
         try {
             Connection result = conn.getConection();
+
             String query = "INSERT INTO llibres (titol, autor, isbn, editorial, any_publicacio, categoria, estat) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pstmt = result.prepareStatement(query);
             pstmt.setString(1, titol);

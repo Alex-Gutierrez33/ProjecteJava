@@ -97,7 +97,22 @@ public class Usuaris extends JFrame{
         ConnectionDB conn = new ConnectionDB();
 
         try {
-            Connection result = conn.getConection();  
+            Connection result = conn.getConection();
+
+            Statement stmt2 = result.createStatement();
+            ResultSet rs2 = stmt2.executeQuery("SELECT * FROM usuaris");
+
+            while (rs2.next()) {
+                String nomDatabase = rs2.getString("nom");
+                String cognomDatabase = rs2.getString("cognoms");
+
+                if (nomDatabase.equals(nom) && cognomDatabase.equals(cognoms)) {
+                    JOptionPane.showMessageDialog(Usuaris.this, "Error aquest usuari ja existeix", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+
+
             String query = "INSERT INTO usuaris (nom, cognoms, email, telefon, rol, data_registre) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = result.prepareStatement(query);
             pstmt.setString(1, nom);

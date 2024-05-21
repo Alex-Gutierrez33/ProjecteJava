@@ -18,6 +18,7 @@ public class VentanaBibliotecarios extends JFrame {
     JLabel textUsu;
     JButton afegirUsuari;
     JButton eliminarUsuari;
+    JLabel textPrestec;
     JButton crearPrestec;
     JButton veurePrestecs;
 
@@ -27,10 +28,10 @@ public class VentanaBibliotecarios extends JFrame {
         setTitle("Bibliotecaris");
         setSize(400, 600);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(10,1));
+        setLayout(new GridLayout(11,1));
 
 
-        text = new JLabel("Accions a realitzar: ");
+        text = new JLabel("Accions sobre llibres: ");
         add(text);
 
         observarLlibres = new JButton("Veure llibres");
@@ -54,6 +55,9 @@ public class VentanaBibliotecarios extends JFrame {
 
         eliminarUsuari = new JButton("Eliminar usuari");
         add(eliminarUsuari);
+
+        textPrestec = new JLabel("Accions prestecs");
+        add(textPrestec);
 
         crearPrestec = new JButton("Crear un prestec");
         add(crearPrestec);

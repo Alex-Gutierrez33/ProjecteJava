@@ -1,5 +1,5 @@
 import java.awt.GridLayout;
-
+import java.util.Random;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,7 +50,18 @@ public class VentanaAfegirLlibre extends JFrame{
         txtISBN = new JLabel("ISBN llibre: ");
         add(txtISBN);
 
-        ISBN = new JTextField();
+        
+        Random random = new Random();
+        int part1 = random.nextInt(1000);
+        int part2 = random.nextInt(10);
+        int part3 = random.nextInt(1000);
+        int part4 = random.nextInt(100000);
+        int part5 = random.nextInt(10);
+
+        String isbnGenerat = part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5;
+
+        ISBN = new JTextField(isbnGenerat);
+        ISBN.setEnabled(false);
         add(ISBN);
 
         txtEditorial = new JLabel("Editorial llibre: ");
