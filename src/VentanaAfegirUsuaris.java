@@ -72,17 +72,22 @@ public class VentanaAfegirUsuaris extends JFrame {
                 String telefon = telefonUsuari.getText();
 
 
-                if (nom.equals("") && cognoms.equals("") && email.equals("") && telefon.equals("")) {
+                if (nom.equals("") || cognoms.equals("") || email.equals("") || telefon.equals("")) {
                     JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
 
 
                 if (telefon.length() != 9) {
-                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Telefon incorrecte", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Telefon incorrecte, ha de tenir una longitud de 9.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
 
+                if (!telefon.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Telefon incorrecte, ha de ser tan sols numeros.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                
                 if (!email.contains("@")) {
                     JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Correu electronic incorrecte", "Error", JOptionPane.INFORMATION_MESSAGE);
                     return;

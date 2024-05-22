@@ -100,6 +100,7 @@ public class Prestecs extends JFrame {
 
     }
 
+    // es per veure els prestecs que hi ha en total.
     public void veurePrestecs(){
         ConnectionDB conn = new ConnectionDB();
         TablaMostrarPrestecs visor = new TablaMostrarPrestecs();
@@ -126,6 +127,7 @@ public class Prestecs extends JFrame {
         }
     }
 
+    // prestec per usuari
     public void veurePrestecsIndividual(){
        
 
