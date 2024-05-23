@@ -51,12 +51,12 @@ public class VentanaEditarLlibre extends JFrame{
                 String campLlibre = (String) camp.getSelectedItem();
                 String nouValorLlibre = nouValor.getText();
 
-                if (rootPaneCheckingEnabled) {
-                    if (titolLlibre.equals("") || nouValorLlibre.equals("") ) {
-                        JOptionPane.showMessageDialog(VentanaEditarLlibre.this, "Error: camps vuits.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                        return;
-                    }
+                
+                if (titolLlibre.equals("") || nouValorLlibre.equals("") ) {
+                    JOptionPane.showMessageDialog(VentanaEditarLlibre.this, "Error: camps buits.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
                 }
+                
 
                 Llibres llibre = new Llibres();
                 llibre.editarLlibre(titolLlibre,campLlibre,nouValorLlibre);

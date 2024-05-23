@@ -149,6 +149,7 @@ public class Llibres extends JFrame {
 
     public void editarLlibre(String titol, String camp, String nouValor){
         ConnectionDB conn = new ConnectionDB();
+        int contador = 0;
         
         try {
             Connection result = conn.getConection();
@@ -158,9 +159,10 @@ public class Llibres extends JFrame {
             while (rs.next()) {
                 String titolDatabse = rs.getString("titol");
                 
-                if ( titolDatabse.equals((titol))) {
+                if (titolDatabse.equals((titol))) {
                     String query = "UPDATE llibres SET " + camp + " = ? WHERE titol = ?";
                     PreparedStatement pstmt = result.prepareStatement(query);
+                    contador++;
                     pstmt.setString(1, nouValor);
                     pstmt.setString(2, titol);
 
@@ -172,11 +174,17 @@ public class Llibres extends JFrame {
                 }
             }
 
+            if (contador == 0) {
+                JOptionPane.showMessageDialog(Llibres.this, "No s'ha trobat el llibre");
+
+            }
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(Llibres.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
+    //Per als lectors
 
     public void mostrarLlibresDisponibles(){
         int contador = 0; 
@@ -214,6 +222,7 @@ public class Llibres extends JFrame {
         }
     }
 
+    //Per als lectors
 
     public void mostrarUnLlibreDisponible(String nomLlibre){
         int contador = 0;
