@@ -62,7 +62,7 @@ public class VentanaBibliotecarios extends JFrame {
         crearPrestec = new JButton("Crear un prestec");
         add(crearPrestec);
 
-        veurePrestecs = new JButton("Listar Prestecs");
+        veurePrestecs = new JButton("Listar Historial Prestecs");
         add(veurePrestecs);
 
 

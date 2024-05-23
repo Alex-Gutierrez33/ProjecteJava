@@ -73,16 +73,5 @@ public class VentanaLogin extends JFrame {
         });
 
     }
-
-    public String getNomUsuari(){
-        return usuari.getText();
-    }
-
-    public String getCognomsUsuari(){
-        return cognoms.getText();
-    }
-
-    
-
  
 }

@@ -194,7 +194,7 @@ public class Prestecs extends JFrame {
         int id_prestec = 0;
         int id_prestecModificar = 0;
         Date dataPrestec = null;
-        LocalDate dataEntregaPrestec = null;
+        LocalDate dataRealitzatPrestac = null;
 
         ConnectionDB conn = new ConnectionDB();
 
@@ -227,11 +227,11 @@ public class Prestecs extends JFrame {
 
             if (contador == 1) {
                 LocalDate dataActual = LocalDate.now();
-                dataEntregaPrestec = dataPrestec.toLocalDate();
+                dataRealitzatPrestac = dataPrestec.toLocalDate();
 
-                Long diferneciaDies = ChronoUnit.DAYS.between(dataEntregaPrestec, dataActual);
+                Long diferneciaDies = ChronoUnit.DAYS.between(dataRealitzatPrestac, dataActual);
 
-                if (diferneciaDies >= 15) {
+                if (diferneciaDies > 15) {
 
                     String query = "UPDATE prestecs set data_retorn_real = ?, estat = ? WHERE id_prestec = ?";
                     PreparedStatement pstmt = result.prepareStatement(query);

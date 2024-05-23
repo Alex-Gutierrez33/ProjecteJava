@@ -53,6 +53,7 @@ public class VentanaAfegirUsuaris extends JFrame {
         add(text6);
 
         dataUsuari = new JTextField();
+        dataUsuari.setEnabled(false);
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         dataUsuari.setText(formatoFecha.format(new Date()));
         add(dataUsuari);
@@ -71,22 +72,6 @@ public class VentanaAfegirUsuaris extends JFrame {
                 String email = emailUsuari.getText();
                 String telefon = telefonUsuari.getText();
 
-
-                if (nom.equals("") || cognoms.equals("") || email.equals("") || telefon.equals("")) {
-                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-
-
-                if (telefon.length() != 9) {
-                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Telefon incorrecte, ha de tenir una longitud de 9.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-
-                if (!telefon.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Telefon incorrecte, ha de ser tan sols numeros.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
                 
                 if (!email.contains("@")) {
                     JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Correu electronic incorrecte", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -94,6 +79,17 @@ public class VentanaAfegirUsuaris extends JFrame {
                     
                 }
 
+
+                if (telefon.length() != 9 || !telefon.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Telefon incorrecte", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                
+                if (nom.equals("") || cognoms.equals("") || email.equals("") || telefon.equals("")) {
+                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
 
                 String rol = (String) rolUsuari.getSelectedItem();
                 String data = dataUsuari.getText();
