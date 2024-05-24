@@ -140,6 +140,7 @@ public class Usuaris extends JFrame{
     public void eliminarUsuari(String nomUsuari, String cognomUsuari){
         ConnectionDB conn = new ConnectionDB();
         int contador = 0;
+        int id_usuari = 0;
 
         try {
             Connection result = conn.getConection();
@@ -152,6 +153,7 @@ public class Usuaris extends JFrame{
                 String cognom = rs.getString("cognoms");
                 if (nom.equals(nomUsuari) && cognom.equals(cognomUsuari)) {
                     contador++;
+                    id_usuari = rs.getInt("id_usuari");
                 }
 
             }
@@ -159,22 +161,35 @@ public class Usuaris extends JFrame{
             if (contador == 0) {
                 JOptionPane.showMessageDialog(Usuaris.this, "No hem trobat l'usuari", "Error", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                String query = "DELETE FROM usuaris WHERE nom = ? AND cognoms = ?";
 
-                PreparedStatement pstmt = result.prepareStatement(query);
-                pstmt.setString(1, nomUsuari);
-                pstmt.setString(2, cognomUsuari);
+                String query2 = "DELETE FROM prestecs WHERE id_usuari = ?";
+                PreparedStatement pstmt2 = result.prepareStatement(query2);
+                pstmt2.setInt(1, id_usuari);
+                
+                int rows2 = pstmt2.executeUpdate();
 
-                int rows  = pstmt.executeUpdate();
+                if (rows2 > 0) {
+                    
+                    String query = "DELETE FROM usuaris WHERE id_usuari = ?";
 
-                if (rows > 0) {
-                    JOptionPane.showMessageDialog(Usuaris.this, "Usuari esobrrat de la base de dades", "Informatiu", JOptionPane.INFORMATION_MESSAGE);                    
+                    PreparedStatement pstmt = result.prepareStatement(query);
+                    pstmt.setInt(1, id_usuari);
+
+                    int rows  = pstmt.executeUpdate();
+
+                    if (rows > 0) {
+                        JOptionPane.showMessageDialog(Usuaris.this, "Usuari esobrrat de la base de dades", "Informatiu", JOptionPane.INFORMATION_MESSAGE);                    
+                    }
                 }
+
+
+
+
             }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(Usuaris.this, "Error al conectar-se a la base de dades", "Error", JOptionPane.INFORMATION_MESSAGE);
-
+            System.out.println(e.getMessage());
         }
 
     }
