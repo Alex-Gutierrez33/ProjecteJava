@@ -30,7 +30,7 @@ public class VentanaEditarLlibre extends JFrame{
         txtCamp = new JLabel("Camp a modificar: ");
         add(txtCamp);
 
-        camp = new JComboBox<>(new String[]{"Titol", "Autor", "Editorial", "Any_publicacio", "Categoria", "Estat"});
+        camp = new JComboBox<>(new String[]{"Titol", "Autor", "Editorial", "Any_publicacio", "Categoria"});
         add(camp);
 
         txtNouValor = new JLabel("Nou valor: ");
@@ -52,10 +52,11 @@ public class VentanaEditarLlibre extends JFrame{
                 String nouValorLlibre = nouValor.getText();
 
 
-                if (campLlibre.equals("Any_publicacio") && !nouValorLlibre.matches("\\d+") && nouValorLlibre.length() != 4) {
-                    JOptionPane.showMessageDialog(VentanaEditarLlibre.this, "Error, has de posar un any vàlid");
-                    return;
-                    
+                if (campLlibre.equals("Any_publicacio") ) {
+                    if (nouValorLlibre.length() != 4 || !nouValorLlibre.matches("\\d+")) {
+                        JOptionPane.showMessageDialog(VentanaEditarLlibre.this, "Error, has de posar un any vàlid");
+                        return;
+                    }                    
                 }
 
                 
