@@ -72,6 +72,12 @@ public class VentanaAfegirUsuaris extends JFrame {
                 String email = emailUsuari.getText();
                 String telefon = telefonUsuari.getText();
 
+                 
+                if (nom.equals("") || cognoms.equals("") || email.equals("") || telefon.equals("")) {
+                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
                 
                 if (!email.contains("@")) {
                     JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Correu electronic incorrecte", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -85,11 +91,7 @@ public class VentanaAfegirUsuaris extends JFrame {
                     return;
                 }
 
-                
-                if (nom.equals("") || cognoms.equals("") || email.equals("") || telefon.equals("")) {
-                    JOptionPane.showMessageDialog(VentanaAfegirUsuaris.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
+               
 
                 String rol = (String) rolUsuari.getSelectedItem();
                 String data = dataUsuari.getText();

@@ -103,16 +103,17 @@ public class VentanaAfegirLlibre extends JFrame{
                 String editorialLlibre = editorial.getText();
                 String anyLlibre4 = any.getText();
 
+                if (titolLlibre.equals("") || autorLlibre.equals("") || editorialLlibre.equals("") ) {
+                    JOptionPane.showMessageDialog(VentanaAfegirLlibre.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
 
                 if (anyLlibre4.length() != 4 || !anyLlibre4.matches("\\d+")) {
                     JOptionPane.showMessageDialog(VentanaAfegirLlibre.this, "Error: any incorrecte.", "Error", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
 
-                if (titolLlibre.equals("") || autorLlibre.equals("") || editorialLlibre.equals("") ) {
-                    JOptionPane.showMessageDialog(VentanaAfegirLlibre.this, "Error: Camps buits", "Error", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
+                
 
                 int anyLlibre = Integer.parseInt(any.getText());
                 String categoriaLlibre = (String) categoria.getSelectedItem();
