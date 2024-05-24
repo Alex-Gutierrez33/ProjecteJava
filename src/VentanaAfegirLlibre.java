@@ -86,6 +86,7 @@ public class VentanaAfegirLlibre extends JFrame{
         add(txtEstat);
 
         estat = new JTextField("disponible");
+        estat.setEnabled(false);
         add(estat);
 
 
