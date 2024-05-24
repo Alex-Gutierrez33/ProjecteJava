@@ -156,6 +156,7 @@ public class Llibres extends JFrame {
             Statement stmt = result.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM llibres");
 
+
             while (rs.next()) {
                 String titolDatabse = rs.getString("titol");
                 
