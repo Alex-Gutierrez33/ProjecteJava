@@ -24,10 +24,10 @@ public class VentanaLectores extends JFrame {
         text = new JLabel("Accions a realitzar: ");
         add(text);
 
-        observarLlibres = new JButton("Veure llibres");
+        observarLlibres = new JButton("Veure llibres disponibles");
         add(observarLlibres);
 
-        observarUnLlibre = new JButton("Veure un llibre");
+        observarUnLlibre = new JButton("Veure un llibre disponible");
         add(observarUnLlibre);
 
         administrarPrestecs = new JButton("Administrar Prestecs");

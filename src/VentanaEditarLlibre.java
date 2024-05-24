@@ -30,7 +30,7 @@ public class VentanaEditarLlibre extends JFrame{
         txtCamp = new JLabel("Camp a modificar: ");
         add(txtCamp);
 
-        camp = new JComboBox<>(new String[]{"Titol", "Autor", "ISBN", "Editorial", "Any", "Categoria", "Estat"});
+        camp = new JComboBox<>(new String[]{"Titol", "Autor", "Editorial", "Any_publicacio", "Categoria", "Estat"});
         add(camp);
 
         txtNouValor = new JLabel("Nou valor: ");
